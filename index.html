@@ -1,0 +1,995 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet.photon.css">
+		
+		<link rel="stylesheet" href="vorarbeit/css/kalender.css">
+		<link rel="stylesheet" href="vorarbeit/css/festival_style.css">
+		<link rel="stylesheet" href="vorarbeit/css/media_768.css">
+		
+		<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@400;600;700&display=swap"rel="stylesheet">
+		<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+		
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+       
+        <title>Festival M-V</title>
+    </head>
+    <body>
+       <div id="ueberschrift">
+			<h1>Die Bunte Welt der Festivals</h1>
+		</div>
+		
+      <div class="zentrum">
+
+    <div class="rechter-rand-container"> 
+        
+        <div class="filter"> 
+            <div id="landkreis">
+                <div class="select-box-header" onclick="toggleCheckboxes()">
+                    <span>- Landkreis wählen -</span>
+                </div>
+                <div id="checkbox-list">
+                    <input type="checkbox" id="kreise" style="display: none;" checked>
+                    <div style="padding: 10px; display: flex; justify-content: center; gap: 15px; font-size: 13px; border-bottom: 1px solid #444; font-weight: bold;">
+                        <span onclick="setAll(true)" style="cursor: pointer; color: #3498db;">Alle an</span>
+                        <span onclick="setAll(false)" style="cursor: pointer; color: #e74c3c;">Alle aus</span>
+                    </div>
+                    <label class="item"><input type="checkbox" class="kreis-check" value="Vorpommern-Rügen" onchange="updateAllCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Vorpommern-Rügen</label>
+                    <label class="item"><input type="checkbox" class="kreis-check" value="Vorpommern-Greifswald" onchange="updateAllCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Vorpommern-Greifswald</label>
+                    <label class="item"><input type="checkbox" class="kreis-check" value="Mecklenburgische Seenplatte" onchange="updateAllCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Mecklenburgische Seenplatte</label>
+                    <label class="item"><input type="checkbox" class="kreis-check" value="Ludwigslust-Parchim" onchange="updateAllCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Ludwigslust-Parchim</label>
+                    <label class="item"><input type="checkbox" class="kreis-check" value="Nordwestmecklenburg" onchange="updateAllCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Nordwestmecklenburg</label>
+                    <label class="item"><input type="checkbox" class="kreis-check" value="Landkreis Rostock" onchange="updateAllCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Landkreis Rostock</label>
+                    <label class="item"><input type="checkbox" class="kreis-check" value="Rostock, Hanse- und Universitätsstadt" onchange="updateAllCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Hansestadt Rostock</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter">
+            <div id="kategorie">
+                <div class="select-box-header" onclick="toggleKatCheckboxes()">
+                    <span>- Kategorie wählen -</span>
+                </div>
+                <div id="kat-checkbox-list" style="display: none;">
+                    <input type="checkbox" id="all-kategorien" style="display: none;" checked>
+                    <div style="padding: 10px; display: flex; justify-content: center; gap: 15px; font-size: 13px; border-bottom: 1px solid #444; font-weight: bold;">
+                        <span onclick="setAllKat(true)" style="cursor: pointer; color: #3498db;">Alle an</span>
+                        <span onclick="setAllKat(false)" style="cursor: pointer; color: #e74c3c;">Alle aus</span>
+                    </div>
+                    <label class="item"><input type="checkbox" class="kat-check" value="Electro" onchange="updateAllKatCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Electro</label>
+                    <label class="item"><input type="checkbox" class="kat-check" value="Akustik" onchange="updateAllKatCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Akustik</label>
+                    <label class="item"><input type="checkbox" class="kat-check" value="Rock" onchange="updateAllKatCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Rock</label>
+                    <label class="item"><input type="checkbox" class="kat-check" value="Pop/Electro" onchange="updateAllKatCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Pop/Electro</label>
+                    <label class="item"><input type="checkbox" class="kat-check" value="Indie" onchange="updateAllKatCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Indie</label>
+                    <label class="item"><input type="checkbox" class="kat-check" value="Indie/Electro" onchange="updateAllKatCheckbox(); filterKarte(); zentriereAufAuswahl()" checked> Indie/Electro</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter">
+            <div class="slider-container">
+                <label for="preis-slider">- Max. Preis: <span id="preis-wert">300</span> € -</label>
+                <input type="range" id="preis-slider" min="0" max="300" step="10" value="300" oninput="filterKarte()">
+            </div>
+        </div>
+
+        <div class="filter">
+            <div id="calendar-container">
+                <div id="calendar-header">
+                    <button onclick="changeMonth(-1)">◀</button>
+                    <h2 id="month-display"></h2>
+                    <button onclick="changeMonth(1)">▶</button>
+                </div>
+                <div id="calendar-grid"></div>
+            </div>
+        </div>
+
+        <div class="filter">
+            <button id="reset-button" onclick="resetFilter()">Filter zurücksetzen</button>
+        </div>
+    </div>  
+
+    <div class="linker-rand-container">
+        <div class="legende">
+            <div class="legende-item"><img src="Symbole/Electro_symbol.png">Electro</div>
+            <div class="legende-item"><img src="Symbole/Pop-Electro_symbol.png">Pop/Electro</div>
+            <div class="legende-item"><img src="Symbole/Rock_symbol.png">Rock</div>
+            <div class="legende-item"><img src="Symbole/Indie-Electro_symbol.png">Indie/Electro</div>
+            <div class="legende-item"><img src="Symbole/Akustik_symbol.png">Akustik</div>
+            <div class="legende-item"><img src="Symbole/Indie_symbol.png">Indie</div>
+        </div>
+        
+        <div class="linker-rand">
+            <button id="vergangene" onclick="toggleVergangeneFestivals(this)">
+                Vergangene Festivals ausschalten
+            </button>
+        </div>
+
+        <div class="linker-rand">
+            <a href="./impressum.html" style="text-decoration: none; width: 100%;">
+                <button id="impressum-button">Impressum</button>
+            </a>
+        </div>
+    </div>
+
+    <div id="map"></div>
+</div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.photon.js"></script>
+        <script src="js/leaflet-search.js"></script>
+		
+		<script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+		
+        <script src="data/Kreise_1.js"></script>
+        <script src="data/Zone_4km_2.js"></script>
+        <script src="data/Zone_2km_3.js"></script>
+        <script src="data/Zone_1km_4.js"></script>
+        <script src="data/Festivals_Kreis_5.js"></script>
+        <script src="data/naechstgelegene_stops_6.js"></script>
+        <script src="data/relevante_stops_7.js"></script>
+		
+		<script src="vorarbeit/js/superfilter.js"></script>
+		<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+		<script src="vorarbeit/js/festival-seiten.js"></script>
+        <script>
+		
+/********** KARTENGERÜST *************/		
+		
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true,
+			maxZoom:18,
+			minZoom:6
+        }).fitBounds([[52.553998458028865,8.751668699615644],[56.14091261604167,23.396089375514062]]);
+		
+        var hash = new L.Hash(map);
+		
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+
+        function removeEmptyRowsFromPopupContent(content, feature) {
+         var tempDiv = document.createElement('div');
+         tempDiv.innerHTML = content;
+         var rows = tempDiv.querySelectorAll('tr');
+         for (var i = 0; i < rows.length; i++) {
+             var td = rows[i].querySelector('td.visible-with-data');
+             var key = td ? td.id : '';
+             if (td && td.classList.contains('visible-with-data') && feature.properties[key] == null) {
+                 rows[i].parentNode.removeChild(rows[i]);
+             }
+         }
+         return tempDiv.innerHTML;
+        }
+		function addClassToPopupIfMedia(content, popup) {
+			var tempDiv = document.createElement('div');
+			tempDiv.innerHTML = content;
+			if (tempDiv.querySelector('td img')) {
+				popup._contentNode.classList.add('media');
+					setTimeout(function() {
+						popup.update(); }, 10);
+			} else {
+				popup._contentNode.classList.remove('media');
+			}
+		}
+		
+	//Maßstab hinzugefügt
+		L.control.scale({
+			metric: true,
+			imperial: false,
+			position: 'bottomleft',
+			maxWidth: 200,
+		}).addTo(map);
+		
+        var bounds_group = new L.featureGroup([]);
+
+        map.createPane('pane_GoogleMaps_0');
+        map.getPane('pane_GoogleMaps_0').style.zIndex = 400;
+        var layer_GoogleMaps_0 = L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleMaps_0',
+            opacity: 1.0,
+            attribution: '<a href="https://google.com/help/terms_maps/" target="_blank">&copy Google Maps</a>', // hier Verlinkung anpassen
+            minZoom: 6,
+            maxZoom: 18,
+            minNativeZoom: 6,
+            maxNativeZoom: 18,
+        });
+        layer_GoogleMaps_0;
+        map.addLayer(layer_GoogleMaps_0);
+		
+/****************/	
+
+
+/******* TOOLTIPP LANDKREIS & STYLING ************/
+
+        function pop_Kreise_1(feature, layer) {
+			if (feature.properties['GEN'] !== null) {
+				layer.bindTooltip(String(feature.properties['GEN']), {
+					sticky: true,
+					className: 'landkreis-tooltip', 
+					direction: 'auto',
+					offset: [15, 10]
+				});
+			}
+			layer.on('add', function (e) {
+				e.target.getElement().style.cursor = 'default';
+			});
+		}
+
+        function style_Kreise_1_0() {
+            return {
+                pane: 'pane_Kreise_1',
+                opacity: 1,
+                color: 'rgba(129,129,129,1.0)',
+                weight: 3.0, 
+                fill: true,
+				fillOpacity: 0.0,
+				interactive: true,
+            }
+        }
+        map.createPane('pane_Kreise_1');
+        map.getPane('pane_Kreise_1').style.zIndex = 401;
+        map.getPane('pane_Kreise_1').style['mix-blend-mode'] = 'normal';
+		
+        var layer_Kreise_1 = new L.geoJson(json_Kreise_1, {
+            interactive: true,
+            pane: 'pane_Kreise_1',
+            onEachFeature: pop_Kreise_1,
+            style: style_Kreise_1_0,
+        });
+        bounds_group.addLayer(layer_Kreise_1);
+        map.addLayer(layer_Kreise_1);
+		
+/***************/	
+
+/******* ZONEN STYLING ********/
+		
+		function style_Zone_4km_2_0() {
+            return {
+                pane: 'pane_Zone_4km_2',
+                opacity: 1,
+                color: 'rgba(141,20,20,0.1)',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(140,10,10,0.2)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Zone_4km_2');
+        map.getPane('pane_Zone_4km_2').style.zIndex = 400;
+        map.getPane('pane_Zone_4km_2').style['mix-blend-mode'] = 'normal';
+
+        var layer_Zone_4km_2 = new L.geoJson(json_Zone_4km_2, {
+            interactive: false,
+            pane: 'pane_Zone_4km_2',
+            style: style_Zone_4km_2_0,
+        });
+        bounds_group.addLayer(layer_Zone_4km_2);
+
+        function style_Zone_2km_3_0() {
+            return {
+                pane: 'pane_Zone_2km_3',
+                opacity: 1,
+                color: 'rgba(255,255,0,0.1)',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,0,0.2)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Zone_2km_3');
+        map.getPane('pane_Zone_2km_3').style.zIndex = 400;
+        map.getPane('pane_Zone_2km_3').style['mix-blend-mode'] = 'normal';
+		
+        var layer_Zone_2km_3 = new L.geoJson(json_Zone_2km_3, {
+            interactive: false,
+            pane: 'pane_Zone_2km_3',
+            style: style_Zone_2km_3_0,
+        });
+        bounds_group.addLayer(layer_Zone_2km_3);
+		
+        function style_Zone_1km_4_0() {
+            return {
+                pane: 'pane_Zone_1km_4',
+                opacity: 1,
+                color: 'rgba(30,255,200,0.1)',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(30,255,200,0.3)',
+                interactive: false,
+            }
+        }
+        map.createPane('pane_Zone_1km_4');
+        map.getPane('pane_Zone_1km_4').style.zIndex = 400;
+        map.getPane('pane_Zone_1km_4').style['mix-blend-mode'] = 'normal';
+		
+        var layer_Zone_1km_4 = new L.geoJson(json_Zone_1km_4, {
+			interactive: false,
+			pane: 'pane_Zone_1km_4',
+			style: style_Zone_1km_4_0,
+		});
+        bounds_group.addLayer(layer_Zone_1km_4);
+
+/**************************/
+
+/******* FESTIVAL-SYMBOLE *******/
+
+		function getFestivalIcon(kategorie) {
+			var fileName;
+			var kat = String(kategorie).toLowerCase().replace(/\s/g, '');
+			if (kat.includes('indie') && kat.includes('electro')) {
+				fileName = 'Indie-Electro_symbol.png';
+			} else if (kat.includes('pop') && kat.includes('electro')) {
+				fileName = 'Pop-Electro_symbol.png';
+			} else if (kat.includes('electro')) {
+				fileName = 'Electro_symbol.png';
+			} else if (kat.includes('akustik')) {
+				fileName = 'Akustik_symbol.png';
+			} else if (kat.includes('rock')) {
+				fileName = 'Rock_symbol.png';
+			} else if (kat.includes('indie')) {
+				fileName = 'Indie_symbol.png';
+			} else {
+				fileName = 'background.png'; 
+			}
+			return 'Symbole/' + fileName;
+		}
+
+		var layer_Festivals_Kreis_5 = new L.geoJson(json_Festivals_Kreis_5, {
+			interactive: true,
+			pane: 'pane_Festivals_Kreis_5',
+			onEachFeature: pop_Festivals_Kreis_5,
+			pointToLayer: function (feature, latlng) {
+				var kat = String(feature.properties['Kategorie']); 
+				var isMobile = window.innerWidth <= 768;
+				var size = isMobile ? 28 : 44; 
+				var anchor = size / 2; 
+
+        var umringAktiv = false;
+        if (typeof map !== 'undefined') {
+            if ((typeof layer_Zone_1km_4 !== 'undefined' && map.hasLayer(layer_Zone_1km_4)) || 
+                (typeof layer_Zone_2km_3 !== 'undefined' && map.hasLayer(layer_Zone_2km_3)) || 
+                (typeof layer_Zone_4km_2 !== 'undefined' && map.hasLayer(layer_Zone_4km_2))) {
+                umringAktiv = true;
+            }
+        }
+
+        if (umringAktiv) {
+            // Der Stern als Text-Symbol 
+            var sternSize = 25;
+            var sternIcon = L.divIcon({
+                className: 'custom-text-stern',
+                html: '<div style="font-size: ' + sternSize + 'px; color: gold; text-shadow: 2px 2px 3px #000;">★</div>',
+                iconSize: [sternSize, sternSize],
+                iconAnchor: [sternSize / 2, sternSize / 2],
+                popupAnchor: [0, -sternSize / 2]
+            });
+            return L.marker(latlng, {
+                icon: sternIcon,
+                pane: 'pane_Festivals_Kreis_5',
+                interactive: true
+            });
+        } else {
+            // Normales Genre-Icon
+            var festivalIcon = L.icon({
+                iconUrl: getFestivalIcon(kat),
+                iconSize: [size, size],
+                iconAnchor: [anchor, anchor],
+                popupAnchor: [0, -anchor] 
+            });
+            return L.marker(latlng, {
+                icon: festivalIcon,
+                pane: 'pane_Festivals_Kreis_5',
+                interactive: true
+            });
+        }
+    }
+});
+
+/****************/
+
+/******* ROUTING-ICON *********/
+
+var routingAktiv = false;
+var routingPanel = null; 
+var control = L.Routing.control({
+    waypoints: [],
+    lineOptions: {
+        styles: [{color: '#e74c3c', opacity: 0.8, weight: 6}] 
+    },
+    language: 'de',
+    show: false, 
+    routeWhileDragging: true,
+    collapsible: false,
+    geocoder: L.Control.Geocoder ? L.Control.Geocoder.photon() : null,
+	createMarker: function(i, wp, n) {
+        // i === 0 ist der Startpunkt
+        var istStart = (i === 0);
+        var symbol = istStart ? '📍' : '🏁';
+        var klassenName = istStart ? 'routing-karte-start' : 'routing-karte-ziel';
+
+        // Leaflet-DivIcon, erlaubt reinen Text (Emojis)
+        var emojiIcon = L.divIcon({
+            html: `<div class="${klassenName}">${symbol}</div>`,
+            className: 'routing-karte-emoji-wrapper', 
+            iconSize: [30, 30],
+            iconAnchor: [15, 15] 
+        });
+
+        return L.marker(wp.latLng, {
+            icon: emojiIcon,
+            draggable: true          // Die Punkte lassen sich auf der Karte verschieben
+        });
+    }
+}).addTo(map);
+
+control.getContainer().style.display = 'none';
+
+function zeichnePanelInhalt() {
+    if (!routingPanel) return;
+    var aktuellePunkte = control.getWaypoints();
+    var hatStart = aktuellePunkte[0] && aktuellePunkte[0].latLng;
+    var hatZiel = aktuellePunkte[1] && aktuellePunkte[1].latLng;
+
+    var startText = hatStart ? "📍 Startpunkt gesetzt" : "❌ Noch kein Startpunkt";
+    var zielText = hatZiel ? "🏁 Zielpunkt gesetzt" : "❌ Noch kein Zielpunkt";
+    
+    // Pur ohne Inline-Styles!
+    routingPanel.innerHTML = `
+        <div class="routing-panel-header">
+            <button id="btnGpsRouting" class="btn-gps-routing">
+                 Aktueller Standort
+            </button>
+        </div>
+        <div class="routing-status-text">
+            <strong>Reihenfolge der Klicks:</strong><br>
+            ${startText}<br>
+            ${zielText}
+        </div>
+        <div id="leaflet-routing-steps">
+            <em>Wegbeschreibung erscheint, sobald die Route gezeichnet ist...</em>
+        </div>
+        <button id="btnRoutingSchliessen" class="btn-routing-close">
+             Route schließen & löschen
+        </button>
+    `;
+
+    document.getElementById('btnGpsRouting').onclick = function(e) {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var loc = L.latLng(position.coords.latitude, position.coords.longitude);
+                var punkte = control.getWaypoints();
+                
+                if (!punkte[0] || !punkte[0].latLng) {
+                    control.spliceWaypoints(0, 1, loc);
+                    map.setView(loc, 12);
+                } else {
+                    control.spliceWaypoints(1, 1, loc);
+                }
+                zeichnePanelInhalt();
+            });
+        }
+    };
+    document.getElementById('btnRoutingSchliessen').onclick = function() {
+        routingAktiv = false;
+        control.setWaypoints([]);
+        routingPanel.style.display = 'none';
+    };
+}
+var RoutingIconControl = L.Control.extend({
+    options: { position: 'topright' },
+
+    onAdd: function (map) {
+        var container = L.DomUtil.create('div', 'leaflet-routing-wrapper-box');
+        var buttonDiv = L.DomUtil.create('div', 'routing-toggle-btn', container);
+        buttonDiv.innerHTML = '↩️'; 
+        buttonDiv.title = 'Routing aktivieren';
+		
+        routingPanel = L.DomUtil.create('div', '', container);
+        routingPanel.id = 'leaflet-routing-panel';
+
+        L.DomEvent.on(buttonDiv, 'click', function (e) {
+            L.DomEvent.stopPropagation(e);
+            L.DomEvent.preventDefault(e);
+            routingAktiv = !routingAktiv;
+            
+            if (routingAktiv) {
+                routingPanel.style.display = 'block';
+                zeichnePanelInhalt();
+            } else {
+                control.setWaypoints([]);
+                routingPanel.style.display = 'none';
+            }
+        });
+
+        L.DomEvent.disableClickPropagation(container);
+        L.DomEvent.disableScrollPropagation(routingPanel);
+
+        return container;
+    }
+});
+map.addControl(new RoutingIconControl());
+
+control.on('routesfound', function(e) {
+    zeichnePanelInhalt();
+    var beschreibungsDiv = document.getElementById('leaflet-routing-steps');
+    if (!beschreibungsDiv) return;
+
+    var routes = e.routes;
+    var summary = routes[0].summary;
+    
+    var distanzKm = (summary.totalDistance / 1000).toFixed(1);
+    var zeitMin = Math.round(summary.totalTime / 60);
+
+    var html = `<strong>Route:</strong> ${distanzKm} km (${zeitMin} min)<br><ol style='padding-left: 15px; margin: 5px 0;'>`;
+    
+    var instructions = routes[0].instructions;
+    instructions.forEach(function(instr) {
+        html += `<li>${instr.text}</li>`;
+    });
+    html += "</ol>";
+    beschreibungsDiv.innerHTML = html;
+});
+
+map.on('click', function(e) {
+    if (!routingAktiv) return;
+    var punkte = control.getWaypoints();
+    
+    if (!punkte[0] || !punkte[0].latLng) {
+        control.spliceWaypoints(0, 1, e.latlng);
+    } else {
+        control.spliceWaypoints(1, 1, e.latlng);
+    }
+    zeichnePanelInhalt();
+});
+
+
+/******Popup Festivals mit Routingeinschränkung*********/
+
+        function pop_Festivals_Kreis_5(feature, layer) {
+		if (feature.properties['Festival_Name']) {
+        layer.bindTooltip(String(feature.properties['Festival_Name']), {
+            sticky: true,
+            className: 'my-tooltip'
+        });
+    }
+	
+	//wenn dann sonst Abfrage (? = dann, : = sonst)
+    var fName = feature.properties['Festival_Name'] ? feature.properties['Festival_Name'].toString().trim() : 'Unbekanntes Festival';
+    var zielUrl = (typeof festivalLinks !== 'undefined' && festivalLinks[fName]) ? festivalLinks[fName] : "";
+    
+    if (!zielUrl || zielUrl === "") {
+        zielUrl = "https://www.google.com/search?q=" + encodeURIComponent(fName + " Festival M-V");
+    }
+            var popupContent = '<div style="text-align: center; font-weight: bold; font-size: 17px; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">' + 
+                        '<a href="' + zielUrl + '" target="_blank" rel="noopener noreferrer" style="color: #8e44ad; text-decoration: none;">' + 
+                           fName + '<span style="font-size: 18px; margin-left: 8px;">&#10150;</span>' +
+                        '</a>' +
+                       '</div>' +
+                        '<table>\
+                        <tr><th scope="row">Kategorie</th><td>' + (feature.properties['Kategorie'] || '') + '</td></tr>\
+                        <tr><th scope="row">Genre</th><td>' + (feature.properties['Genre'] || '') + '</td></tr>\
+                        <tr style="height: 10px;"> <td colspan="2"></td> </tr>\
+                        <tr><th scope="row">Preise ab</th><td>' + (feature.properties['Preise ab'] !== null ? parseFloat(feature.properties['Preise ab']).toFixed(2).replace('.', ',') + ' €' : '') + '</td></tr>\
+                        <tr><th scope="row">Datum</th><td>' + (feature.properties['Datum'] || '') + '</td></tr>\
+                        <tr><th scope="row">Dauer</th><td>' + (feature.properties['Dauer'] || '') + '</td></tr>\
+                        <tr style="height: 10px;"> <td colspan="2"></td> </tr>\
+                        <tr><th scope="row">Straße</th><td>' + (feature.properties['Straße'] || '') + '</td></tr>\
+                        <tr><th scope="row">PLZ</th><td>' + (feature.properties['PLZ'] || '') + '</td></tr>\
+                        <tr><th scope="row">Ort</th><td>' + (feature.properties['Ort'] || '') + '</td></tr>\
+                        <tr><th scope="row">Landkreis</th><td>' + (feature.properties['GEN'] || '') + '</td></tr>\
+                       </table>';
+					    
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			
+		layer.bindPopup(content, {
+			minWidth: 350,
+			maxWidth: 800,
+			autoPan: true
+		});
+    
+    layer.off('click');
+
+    layer.on('click', function(e) {
+        L.DomEvent.stopPropagation(e); 
+        
+        if (routingAktiv) {
+            var punkte = control.getWaypoints();
+            if (!punkte[0] || !punkte[0].latLng) {
+                control.spliceWaypoints(0, 1, e.latlng);
+            } else {
+                control.spliceWaypoints(1, 1, e.latlng);
+            }
+            zeichnePanelInhalt(); 
+        } else {
+            layer.openPopup();
+        }
+    });
+}
+map.createPane('pane_Festivals_Kreis_5');
+map.getPane('pane_Festivals_Kreis_5').style.zIndex = 402;
+bounds_group.addLayer(layer_Festivals_Kreis_5);
+map.addLayer(layer_Festivals_Kreis_5);
+
+/**************************/
+
+/*******nächstgelegene Bahnhöfe Style & Popup********/
+
+    function pop_naechstgelegene_stops_6(feature, layer) {
+        layer.on({
+            mouseout: function(e) {
+                if (typeof layer.closePopup == 'function') {
+                    layer.closePopup();
+                } else {
+                    layer.eachLayer(function(feature){
+                        feature.closePopup()
+                    });
+                }
+            },
+            mouseover: highlightFeature,
+        });
+        var popupContent = '<table>\
+                <tr>\
+                    <th scope="row">Haltestellen-Name</th>\
+                    <td class="visible-with-data" id="name">' + (feature.properties['name'] !== null ? autolinker.link(String(feature.properties['name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                </tr>\
+                <tr>\
+                    <th scope="row">Entfernung</th>\
+					<td class="visible-with-data" id="total_cost">' + 
+					(feature.properties['total_cost'] !== null ? 
+					Number(Number(feature.properties['total_cost']).toFixed(1)).toLocaleString('de-DE') + ' Meter' : '') + 
+				'</td>\
+                </tr>\
+            </table>';
+        var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+		layer.on('popupopen', function(e) {
+			addClassToPopupIfMedia(content, e.popup);
+		});
+		layer.bindPopup(content, { maxWidth: 400 });
+    }
+ 
+        map.createPane('pane_naechstgelegene_stops_6');
+        map.getPane('pane_naechstgelegene_stops_6').style.zIndex = 407;
+        map.getPane('pane_naechstgelegene_stops_6').style['mix-blend-mode'] = 'normal';
+		
+        var layer_naechstgelegene_stops_6 = new L.geoJson(json_naechstgelegene_stops_6, {
+			interactive: true,
+			pane: 'pane_naechstgelegene_stops_6',
+			onEachFeature: pop_naechstgelegene_stops_6,
+			pointToLayer: function (feature, latlng) {
+
+			var infoTrainIcon = L.divIcon({
+				html: '<i class="fa-solid fa-train"></i>',
+				className: 'custom-bahn-icon-info', 
+				iconSize: [24, 24],
+				iconAnchor: [12, 12]
+			});
+        
+			return L.marker(latlng, {
+				icon: infoTrainIcon,
+				interactive: true,
+				pane: 'pane_naechstgelegene_stops_6'
+			});
+		},
+	});
+        bounds_group.addLayer(layer_naechstgelegene_stops_6);
+
+/**************************/
+		
+		
+/*******Relevante Bahnhöfe nur in den Umringen anzeigen********/
+		
+        function pop_relevante_stops_7(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">Haltestellen-Name</th>\
+                        <td class="visible-with-data" id="name">' + (feature.properties['name'] !== null ? autolinker.link(String(feature.properties['name']).replace(/'/g, '\'').toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            var content = removeEmptyRowsFromPopupContent(popupContent, feature);
+			layer.on('popupopen', function(e) {
+				addClassToPopupIfMedia(content, e.popup);
+			});
+			layer.bindPopup(content, { maxWidth: 400 });
+        }
+
+        map.createPane('pane_relevante_stops_7');
+        map.getPane('pane_relevante_stops_7').style.zIndex = 403;
+        map.getPane('pane_relevante_stops_7').style['mix-blend-mode'] = 'normal';
+		
+// Eine leere Liste für die "erlaubten" Bahnhöfe erstellen
+var erlaubteBahnStops = [];
+
+// Den Layer definieren
+var layer_relevante_stops_7 = new L.geoJson(json_relevante_stops_7, {
+    interactive: true,
+    pane: 'pane_relevante_stops_7',
+    onEachFeature: pop_relevante_stops_7,
+    pointToLayer: function (feature, latlng) {
+        var trainIcon = L.divIcon({
+            html: '<i class="fa-solid fa-train"></i>',
+            className: 'custom-bahn-icon',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+        });
+        
+        return L.marker(latlng, {
+            icon: trainIcon,
+            interactive: true,
+            pane: 'pane_relevante_stops_7' 
+        });
+    },
+    filter: function(feature) {
+        return erlaubteBahnStops.includes(String(feature.properties['name']));
+    }
+});
+
+// Nur der Gruppe hinzufügen, NICHT direkt der Karte
+bounds_group.addLayer(layer_relevante_stops_7);
+
+/**************************/
+
+/*******Button Adresse suchen********/
+
+        const url = {"Nominatim OSM": "https://nominatim.openstreetmap.org/search?format=geojson&addressdetails=1&"};
+		
+        var photonControl = L.control.photon({
+            url: url["Nominatim OSM"],
+            feedbackLabel: '',
+            position: 'topleft',
+            includePosition: true,
+            initial: true,
+        }).addTo(map);
+		
+        photonControl._container.childNodes[0].style.borderRadius="10px";
+
+        var x = null;
+        var z = null;
+		
+        photonControl.on('selected', function(e) { 
+            if (x != null) { 
+                map.removeLayer(obj3.marker);
+                map.removeLayer(x);
+            }
+
+            obj2.gcd = e.choice;
+            x = L.geoJSON(obj2.gcd).addTo(map);
+			
+            var label = typeof obj2.gcd.properties.label === 'undefined' ? obj2.gcd.properties.display_name : obj2.gcd.properties.label;
+			
+            obj3.marker = L.marker(x.getLayers()[0].getLatLng()).bindPopup(label).addTo(map);
+            map.setView(x.getLayers()[0].getLatLng(), 17);
+			
+            z = typeof e.choice.properties.label === 'undefined' ? e.choice.properties.display_name : e.choice.properties.label;
+            e.target.input.value = z;
+        }); 
+		
+        var search = document.getElementsByClassName("leaflet-photon leaflet-control")[0];
+        search.classList.add("leaflet-control-search");
+        search.style.display = "flex";
+        search.style.backgroundColor="rgba(255,255,255,0.5)";
+
+        var button = document.createElement("div");
+        button.id = "gcd-button-control";
+        button.className = "gcd-gl-btn fa fa-search search-button";
+
+        search.insertBefore(button, search.firstChild);
+        var last = search.lastChild; 
+        last.style.display = "none";
+		
+        button.addEventListener("click", function (e) {
+            last.style.display = (last.style.display === "none") ? "block" : "none";
+        });
+/**************************/
+
+/*******Ebenen-Button********/	
+		
+		 var overlaysTree = [
+		{
+			label: '<span class="legende-quadrat legende-1km"></span> 1km Umkreis', 
+			layer: layer_Zone_1km_4, 
+			radioGroup: 'auswahl' 
+		},
+		{
+			label: '<span class="legende-quadrat legende-2km"></span> 2km Umkreis', 
+			layer: layer_Zone_2km_3, 
+			radioGroup: 'auswahl'
+		},
+		{
+			label: '<span class="legende-quadrat legende-4km"></span> 4km Umkreis', 
+			layer: layer_Zone_4km_2, 
+			radioGroup: 'auswahl'
+		},
+		{
+			label: '<i class="fa-solid fa-train" style="color: #000; margin-right: 12px; width: 14px; text-align: center; text-shadow: 0 0 2px #B2E8B6, 0 0 5px #B2E8B6, 0 0 10px #B2E8B6, 0 0 15px #B2E8B6;"></i> nächstgelegene Haltestelle',
+			layer: layer_naechstgelegene_stops_6,
+			radioGroup: 'auswahl'
+		},
+		{
+			label: '<b>Keine Auswahl (Karte leeren)</b>', 
+			layer: L.layerGroup([]), 
+			radioGroup: 'auswahl'
+		}
+		];
+        var lay = L.control.layers.tree(null, overlaysTree,{
+           
+            collapsed: true,
+        });
+        lay.addTo(map);
+		
+function updateMapLayers(umkreisLayer) {
+    // Liste der erlaubten Bahnhöfe zurücksetzen
+    erlaubteBahnStops = []; 
+
+    if (umkreisLayer) {
+        // Radius in Metern bestimmen
+        var maxDistanz = 0;
+        if (umkreisLayer === layer_Zone_1km_4) maxDistanz = 1000;
+        else if (umkreisLayer === layer_Zone_2km_3) maxDistanz = 2000;
+        else if (umkreisLayer === layer_Zone_4km_2) maxDistanz = 4000;
+
+        // Welches Festival ist gerade im Fokus des Nutzers?
+        var mapCenter = map.getCenter();
+        var aktivesFestival = null;
+        var minAbstand = Infinity;
+
+        if (typeof json_Festivals_Kreis_5 !== 'undefined') {
+            json_Festivals_Kreis_5.features.forEach(function(f) {
+                var festCoords = f.geometry.coordinates;
+                var testLatLng = L.latLng(festCoords[1], festCoords[0]);
+                var abstandZumCenter = mapCenter.distanceTo(testLatLng);
+                
+                if (abstandZumCenter < minAbstand) {
+                    minAbstand = abstandZumCenter;
+                    aktivesFestival = f;
+                }
+            });
+        }
+
+        // Wenn das Festival ermittelt wurde, werden die Distanzen zu den Bahnhöfen berechnet
+        if (aktivesFestival && maxDistanz > 0 && typeof json_relevante_stops_7 !== 'undefined') {
+            var fCoords = aktivesFestival.geometry.coordinates;
+            var festivalLatLng = L.latLng(fCoords[1], fCoords[0]);
+
+            json_relevante_stops_7.features.forEach(function(bahnhofFeature) {
+                var coords = bahnhofFeature.geometry.coordinates;
+                var bahnLatLng = L.latLng(coords[1], coords[0]);
+                
+                // Exakte Distanz zwischen diesem Festival und dem Bahnhof berechnen
+                var distanz = festivalLatLng.distanceTo(bahnLatLng);
+
+                // Wenn der Bahnhof nah genug dran ist, Name in die Erlaubt-Liste
+                if (distanz <= maxDistanz) {
+                    erlaubteBahnStops.push(String(bahnhofFeature.properties['name']));
+                }
+            });
+        }
+    }
+
+    // Bahnhof-Layer aktualisieren
+    layer_relevante_stops_7.clearLayers();
+    
+    layer_relevante_stops_7.options.filter = function(feature) {
+        return erlaubteBahnStops.includes(String(feature.properties['name']));
+    };
+    
+    layer_relevante_stops_7.addData(json_relevante_stops_7);
+    
+    // Wenn eine Zone aktiv ist,Bahnhöfe auf Karte zeigen
+    if (umkreisLayer) {
+        layer_relevante_stops_7.addTo(map);
+    }
+    
+    // Festivals neu zeichnen für das Stern-Symbol
+    layer_Festivals_Kreis_5.clearLayers();
+    layer_Festivals_Kreis_5.addData(json_Festivals_Kreis_5);
+}
+
+// Event: Wenn im Menü ein Umkreis eingeschaltet wird
+map.on('overlayadd', function(e) {
+    var umringe = [layer_Zone_1km_4, layer_Zone_2km_3, layer_Zone_4km_2];
+    if (umringe.includes(e.layer)) {
+        updateMapLayers(e.layer); 
+    }
+});
+
+// Event: Wenn Umkreis wieder ausgeschaltet/Karte geleert wird
+map.on('overlayremove', function(e) {
+    var umringe = [layer_Zone_1km_4, layer_Zone_2km_3, layer_Zone_4km_2];
+    if (umringe.includes(e.layer)) {
+        erlaubteBahnStops = []; 
+        updateMapLayers(null);
+        map.removeLayer(layer_relevante_stops_7); 
+    }
+});
+/**************************/
+
+/**************Vergangene Festivals ausschalten**********/
+
+let nurZukuenftige = false;
+
+function toggleVergangeneFestivals(button) {
+    // Schalter umlegen & CSS-Klasse umschalten
+    nurZukuenftige = !nurZukuenftige;
+    button.classList.toggle('aktiv', nurZukuenftige);
+    button.innerText = nurZukuenftige ? "Alle Festivals anzeigen" : "Vergangene Festivals ausschalten";
+
+    // Das heutige Datum holen
+    let heute = new Date();
+    heute.setHours(0,0,0,0);
+
+    // Wenn-dann-sonst Abfrage für jedes Festival
+    layer_Festivals_Kreis_5.eachLayer(function(layer) {
+        let textDatum = layer.feature.properties['Datum']; // Holt z.B. "28.05.-30.05."
+        
+        if (textDatum) {
+            // Trennen am Bindestrich: Wenn Zeitraum, nimm das Enddatum (teile[1]), sonst das Einzeldatum (teile[0])
+            let teile = textDatum.split('-');
+            let endDatumString = teile[1] ? teile[1].trim() : teile[0].trim();
+            
+            // Punkte trennen (Tag, Monat, Jahr)
+            let d = endDatumString.split('.');
+            let tag = parseInt(d[0]);
+            let monat = parseInt(d[1]) - 1;
+            let jahr = (d[2] && d[2].trim() !== '') ? parseInt(d[2]) : 2026;
+
+            let festivalEnde = new Date(jahr, monat, tag);
+
+            // Nur vergleichen, wenn das Datum gültig ermittelt wurde
+            if (!isNaN(festivalEnde.getTime())) {
+                // WENN der Button aktiv ist UND das Festival in der Vergangenheit liegt...
+                if (nurZukuenftige && festivalEnde < heute) {
+                    map.removeLayer(layer); // ...DANN: Runter von der Karte!
+                } else {
+                    map.addLayer(layer);    // ...SONST: Auf der Karte lassen/wieder hinzufügen!
+                }
+            }
+        }
+    });
+
+    if (typeof filterKarte === "function") {
+        filterKarte();
+    }
+}
+/**************************/
+        </script>
+    </body>
+</html>
