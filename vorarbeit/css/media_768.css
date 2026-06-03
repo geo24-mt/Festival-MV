@@ -150,4 +150,13 @@ html, body {
     margin: 5px 8px !important; 
 	max-width: 190px;	
 }
-
+.leaflet-top, 
+.leaflet-bottom {
+    z-index: 1000 !important;
+}
+.leaflet-control-container {
+    z-index: 1000 !important;
+}
+.leaflet-popup-pane {
+    z-index: 4000 !important; 
+}
