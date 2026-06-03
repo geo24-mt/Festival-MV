@@ -143,20 +143,11 @@ html, body {
 }
 .leaflet-popup-content-wrapper {
     padding: 2px !important; 
-	max-width: 200px;
+	max-width: 230px;
 }
 .leaflet-popup-content {
     font-size: 11px !important;
     margin: 5px 8px !important; 
-	max-width: 190px;	
+	max-width: 220px;	
 }
-.leaflet-top, 
-.leaflet-bottom {
-    z-index: 1000 !important;
-}
-.leaflet-control-container {
-    z-index: 1000 !important;
-}
-.leaflet-popup-pane {
-    z-index: 4000 !important; 
-}
+
