@@ -1,0 +1,153 @@
+/******Responsive Optimierung fürs Handy******/
+
+@media (max-width: 768px) {
+
+html, body {
+    height: auto !important;
+    overflow-y: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important; 
+    gap: 0 !important;
+}
+
+#ueberschrift {
+    order: -1 !important;
+    width: 100% !important;
+    height: auto !important;     
+    min-height: 80px !important; 
+    padding: 5px 0 !important;
+    position: relative !important;
+    overflow: visible !important; 
+}
+
+#ueberschrift h1 {
+    font-size: 1.8em !important;  
+    white-space: normal !important; 
+    word-wrap: break-word !important;
+    text-align: center !important;
+}
+
+.zentrum {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    height: auto !important; 
+    width: 80% !important;
+    order: 1 !important; 
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+.linker-rand-container, .rechter-rand-container {
+    display: contents !important;
+}
+
+#map {
+    height: 400px !important;
+    width: 80% !important;
+    order: 2 !important; 
+    position: relative !important;
+	margin: 8px !important;
+}
+
+.filter, .legende, .linker-rand {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    margin: 8px auto !important;
+    width: 90% !important;
+    transform: none !important;
+    max-width: none !important; 
+    min-width: 0 !important;  
+}
+
+.legende {
+    order: 0 !important;
+    padding: 15px 5px !important;
+    display: flex !important;
+    flex-direction: row !important; 
+    flex-wrap: wrap !important;   
+    justify-content: center !important;
+    gap: 15px !important; 
+}
+
+.legende-item {
+    display: flex !important;
+    flex-direction: row !important; 
+    align-items: center !important;
+    font-size: 13px !important;
+    gap: 5px !important;
+    width: auto !important;
+}
+
+.filter:has(#landkreis) { order: 3 !important; }
+.filter:has(#kategorie) { order: 4 !important; }
+.filter:has(.slider-container) { order: 5 !important; }
+.filter:has(#calendar-container) { order: 6 !important; }
+.filter:has(#reset-button) { order: 7 !important; }
+.linker-rand:has(#vergangene) { order: 1 !important; }
+.linker-rand:has(#impressum-button) { order: 9 !important; } 
+
+#Überschrift, #Überschrift h1 {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
+
+.filter:has(#calendar-container) {
+    position: relative !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 10px 0 !important;	
+}
+.leaflet-routing-wrapper-box,#leaflet-routing-panel {
+	max-height: 350px !important;  
+    overflow: visible !important;
+	top: -5px;
+	width: 200px;
+	    box-shadow: none !important;
+	z-index: 3001 !important;
+    position: relative;
+}
+.leaflet-top.leaflet-right, 
+.leaflet-right .leaflet-routing-wrapper-box {
+    z-index: 3000 !important;
+}
+#leaflet-routing-panel h4, 
+#leaflet-routing-panel .routing-status-text,
+#leaflet-routing-panel strong {
+    font-size: 11px !important; 
+    line-height: 1.3 !important;
+}
+.btn-routing-close {
+    position: relative !important;
+    top: -2.5px !important; 
+    font-size: 11px !important; 
+    padding: 3px !important; 
+}
+.leaflet-control-scale-line {
+	transform: scale(0.5) !important;
+	transform-origin: bottom left !important;
+}
+.leaflet-control-scale {
+    box-shadow: none !important;
+}
+.leaflet-control-attribution, 
+.leaflet-control-attribution a {
+    font-size: 9px !important;  
+    padding: 0 1px !important; 
+    line-height: 1.2 !important;
+}
+.leaflet-popup-content-wrapper {
+    padding: 2px !important; 
+	max-width: 250px;
+}
+.leaflet-popup-content {
+    font-size: 11px !important;
+    margin: 5px 8px !important; 
+	max-width: 240px;
+	
+}
