@@ -129,7 +129,7 @@ html, body {
     padding: 3px !important; 
 }
 .leaflet-control-scale-line {
-	transform: scale(0.5) !important;
+	transform: scale(0.4) !important;
 	transform-origin: bottom left !important;
 }
 .leaflet-control-scale {
@@ -143,11 +143,12 @@ html, body {
 }
 .leaflet-popup-content-wrapper {
     padding: 2px !important; 
-	max-width: 250px;
+	max-width: 230px;
+	z-index: 1000;
 }
 .leaflet-popup-content {
     font-size: 11px !important;
     margin: 5px 8px !important; 
-	max-width: 240px;
+	max-width: 220px;
 	
 }
