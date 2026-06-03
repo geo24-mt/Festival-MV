@@ -129,7 +129,7 @@ html, body {
     padding: 3px !important; 
 }
 .leaflet-control-scale-line {
-	transform: scale(0.5) !important;
+	transform: scale(0.2) !important;
 	transform-origin: bottom left !important;
 }
 .leaflet-control-scale {
@@ -137,7 +137,7 @@ html, body {
 }
 .leaflet-control-attribution, 
 .leaflet-control-attribution a {
-    font-size: 9px !important;  
+    font-size: 8px !important;  
     padding: 0 1px !important; 
     line-height: 1.2 !important;
 }
