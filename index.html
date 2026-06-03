@@ -247,7 +247,7 @@
                 weight: 3.0, 
                 fill: true,
 				fillOpacity: 0.0,
-				interactive: true,
+				interactive: false,
             }
         }
         map.createPane('pane_Kreise_1');
@@ -990,6 +990,27 @@ function toggleVergangeneFestivals(button) {
     }
 }
 /**************************/
+
+/***** SCHLIE?EN-PFEILE IM EBENENBUTTON *********/
+document.addEventListener("DOMContentLoaded", function() {
+    var layerPanel = document.querySelector('.leaflet-control-layers');  
+    if (layerPanel) {
+        layerPanel.addEventListener('click', function(e) {
+
+            var toggleBtn = layerPanel.querySelector('.leaflet-control-layers-toggle, .toggle, a');
+            
+            if (toggleBtn && toggleBtn.contains(e.target) && layerPanel.classList.contains('leaflet-control-layers-expanded')) {
+                e.preventDefault();
+                e.stopPropagation();
+               
+                layerPanel.classList.remove('leaflet-control-layers-expanded');
+            }
+        });
+    }
+});
+
+/**************************/
+
         </script>
     </body>
 </html>
