@@ -49,7 +49,6 @@ html, body {
     width: 80% !important;
     order: 2 !important; 
     position: relative !important;
-    z-index: 10 !important;
 	margin: 8px !important;
 }
 
@@ -130,7 +129,7 @@ html, body {
     padding: 3px !important; 
 }
 .leaflet-control-scale-line {
-	transform: scale(0.2) !important;
+	transform: scale(0.5) !important;
 	transform-origin: bottom left !important;
 }
 .leaflet-control-scale {
@@ -138,26 +137,17 @@ html, body {
 }
 .leaflet-control-attribution, 
 .leaflet-control-attribution a {
-    font-size: 8px !important;  
+    font-size: 9px !important;  
     padding: 0 1px !important; 
     line-height: 1.2 !important;
 }
 .leaflet-popup-content-wrapper {
     padding: 2px !important; 
-	max-width: 230px;
+	max-width: 250px;
 }
 .leaflet-popup-content {
     font-size: 11px !important;
     margin: 5px 8px !important; 
-	max-width: 220px;	
-}
-.leaflet-popup-pane {
-    position: absolute !important;
-    z-index: 99999 !important;
-}
-
-/* Setzt die Steuerelemente (Zoom, Suche), die das Popup verdecken, auf eine feste, niedrigere Ebene */
-.leaflet-control-container {
-    position: absolute !important;
-    z-index: 1 !important;
+	max-width: 240px;
+	
 }
