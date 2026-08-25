@@ -444,9 +444,7 @@ var json_Festivals_Kreis_5 = {
           53.370502340577389
         ]
       }
-    }
-  ]
-},
+    },
 {
       "type": "Feature",
       "properties": {
@@ -454,7 +452,7 @@ var json_Festivals_Kreis_5 = {
         "Festival_Name": "Air Beat One Festival",
         "Kategorie": "Electro",
         "Genre": "Mainstage EDM, Hardstyle, Trance, Psytrance, Techno, Electro-House, Drum 'n' Bass, Eurodance/Hands-Up-Klassiker",
-        "Preise ab": ???,
+        "Preise ab": 0,
         "Datum": "07.07.2027-11.07.2027",
         "Dauer": "5 Tage",
         "Straße": "Flugpl. 1",
@@ -469,4 +467,6 @@ var json_Festivals_Kreis_5 = {
           53.3643633
         ]
       }
-    }:
+    }
+  ]
+};
