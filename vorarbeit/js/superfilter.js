@@ -18,7 +18,7 @@ function filterKarte() {
 		var d = str.trim().split('.');
 		var tag = parseInt(d[0]);
 		var monat = parseInt(d[1]) - 1;
-		var jahr = d[2] ? parseInt(d[2]) : 2026;
+		var jahr = parseInt(d[2]);
 		return new Date(jahr, monat, tag);
 	};
 	
