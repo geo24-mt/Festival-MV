@@ -1,62 +1,56 @@
-
-/**Geändert**/
 ul.photon-autocomplete {
     position: absolute;
-    background-color:rgba(20, 20, 20, 0.9);
+    background-color:rgba(20, 20, 20, 0.9);	/* geändert */
     max-width: fit-content;
     z-index: 1000;
     box-shadow: 0 4px 9px #999999;
     display: none;
-    margin: 2px; /* Remove margins */
+    margin: 2px; 		/* geändert */
     list-style-type: none; /* Remove bullets */
-    padding: 2px; /* Remove padding */
-	padding-bottom: 5px;
-    font-family: 'Montserrat', sans-serif;
+    padding: 2px; 		/* geändert */
+	padding-bottom: 5px;		/* hinzugefügt */
+    font-family: 'Montserrat', sans-serif;	/* geändert */
     height: 200px;
     overflow:hidden;
     overflow-y: scroll;
     scrollbar-width: none;
-	border: 4px solid transparent !important;
-			border-radius: 12px !important;
-			background-image: linear-gradient(rgba(0,0,0,1), rgba(0,0,0,0.7)), 
-							  linear-gradient(45deg, #f39c12, #e74c3c, #9b59b6, #3498db, #2ecc71) !important;
-			background-origin: border-box !important;
-			background-clip: padding-box, border-box !important;
-	border-radius: 12px;
-	color: white;
+	border: 4px solid transparent !important;	/* hinzugefügt */
+	border-radius: 12px !important;		/* hinzugefügt */
+	background-image: linear-gradient(rgba(0,0,0,1), rgba(0,0,0,0.7)), 
+					linear-gradient(45deg, #f39c12, #e74c3c, #9b59b6, #3498db, #2ecc71) !important;		/* hinzugefügt */
+	background-origin: border-box !important;			/* hinzugefügt */
+	background-clip: padding-box, border-box !important; /* hinzugefügt */
+	color: white;		/* hinzugefügt */
 }
 .photon-autocomplete li {
     min-height: 20px;
     line-height: 1em;
-    padding: 10px;
-	padding-bottom: 15px;
+    padding: 10px;	/* geändert */
+	padding-bottom: 15px;	/* hinzugefügt */
     overflow: hidden;
-    /* white-space: nowrap; */
     word-wrap: break-word;
     overflow-wrap: break-word;
     word-break: break-word;
-    font-size: 0.9em;
+    font-size: 0.9em;	/* geändert */
 }
 .photon-autocomplete li strong {
     display: block;
-    font-weight: normal !important;
+    font-weight: normal !important;		/* hinzugefügt */
 }
 .photon-autocomplete li.on {
-	background-color: white;
+	background-color: white;	/* geändert */
     cursor: pointer;
-	color: black;
+	color: black;	/* hinzugefügt */
 }
 .photon-autocomplete li.photon-no-result {
     text-align: center;
-    color: white;	
+    color: white;		/* geändert */
     font-size: 0.9em;
     line-height: 20px;
     width: fit-content;
     block-size: fit-content;
-	max-height: 10px;
+	max-height: 10px;	/* hinzugefügt */
 }
-/**Ende**/
-
 .photon-autocomplete .photon-feedback {
     display: block;
     text-align: right;
@@ -81,8 +75,6 @@ ul.photon-autocomplete {
     align-items: center !important;
     background-color: transparent !important;
 }
-
-/* Das Eingabefeld innen drin "befreien" */
 .photon-input {
     border: none !important;
     background: transparent !important;

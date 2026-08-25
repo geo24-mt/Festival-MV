@@ -209,7 +209,6 @@
 		
 /**Hinzugefügt**/
 
-/*Geschlossener Zustand: Kleiner Button */
 .leaflet-touch .leaflet-control-layers:not(.leaflet-control-layers-expanded) {
     width: 30px !important;
     height: 30px !important;
@@ -219,7 +218,6 @@
     justify-content: center !important;
     align-items: center !important;
 }
-/* Geöffneter Zustand: Der Kasten wird zur dunklen Liste */
 .leaflet-touch .leaflet-control-layers-expanded {
     width: auto !important;
     height: auto !important;
@@ -235,9 +233,9 @@
     color: white !important;
     font-family: 'Montserrat', sans-serif !important;
 }
-/* Das Icon (Toggle) - Muss über alles andere */
+
 .leaflet-control-layers-toggle {
-    z-index: 9999 !important; /* Extrem hoch, damit es immer oben liegt */
+    z-index: 9999 !important; 
     position: relative !important;
 }
 .leaflet-control-layers-expanded .leaflet-control-layers-toggle {
@@ -249,7 +247,6 @@
     margin-bottom: 0px !important;
     margin-top: 0px !important;
 }
-/* Die Liste (Inhalt) - Muss unter das Icon */
 .leaflet-control-layers-list {
     background: none !important;
     border: none !important;
@@ -257,28 +254,28 @@
     display: block !important;
     clear: both !important;   
     position: relative !important;
-    z-index: 100 !important; /* Deutlich niedriger als das Icon */ 
-    margin-top: -15px !important; /* Zieht die Liste nach oben in den leeren Raum */
+    z-index: 100 !important; 
+    margin-top: -15px !important; 
     padding-top: 0 !important;
 }
-/* SICHERHEITSSCHALTER: Liste im geschlossenen Zustand komplett deaktivieren */
+
 .leaflet-control-layers:not(.leaflet-control-layers-expanded) .leaflet-control-layers-list {
     display: none !important;
     opacity: 0 !important;
     visibility: hidden !important;
 }
-/* Styling für die quadratischen Symbole im Ebenenmenü */
+
 .legende-quadrat {
     display: inline-block !important;
     width: 14px !important;
     height: 14px !important;
     margin-right: 12px !important;
     vertical-align: middle !important;
-    border: 1px solid #aaa !important; /* Feiner grauer Rand */
-    border-radius: 3px !important; /* Leicht abgerundete Ecken */
+    border: 1px solid #aaa !important; 
+    border-radius: 3px !important;
     box-shadow: 0 0 4px rgba(255, 255, 255, 0.3) !important;
 }
-/* Farben für die einzelnen Radien */
+
 .legende-1km {
     background-color: #3fe2b5 !important;
 }

@@ -15,7 +15,7 @@
 		
 		<link rel="stylesheet" href="vorarbeit/css/kalender.css">
 		<link rel="stylesheet" href="vorarbeit/css/festival_style.css">
-		<link rel="stylesheet" href="vorarbeit/css/media_768.css">
+		<link rel="stylesheet" href="vorarbeit/css/Responsive_Optimierung.css">
 		
 		<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Montserrat:wght@400;600;700&display=swap"rel="stylesheet">
 		<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
@@ -223,7 +223,7 @@
 /****************/	
 
 
-/******* TOOLTIPP LANDKREIS & STYLING ************/
+/******* TOOLTIP LANDKREIS & STYLING ************/
 
         function pop_Kreise_1(feature, layer) {
 			if (feature.properties['GEN'] !== null) {
@@ -570,7 +570,7 @@ map.on('click', function(e) {
 });
 
 
-/******Popup Festivals mit Routingeinschränkung*********/
+/****** POPUP FESTIVALS MIT ROUTENEINSCHRÄNKUNG *********/
 
         function pop_Festivals_Kreis_5(feature, layer) {
 		if (feature.properties['Festival_Name']) {
@@ -587,9 +587,9 @@ map.on('click', function(e) {
     if (!zielUrl || zielUrl === "") {
         zielUrl = "https://www.google.com/search?q=" + encodeURIComponent(fName + " Festival M-V");
     }
-            var popupContent = '<div style="text-align: center; font-weight: bold; font-size: 17px; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">' + 
+var popupContent = '<div style="text-align: center; font-weight: bold; font-size: 17px; margin-bottom: 10px; border-bottom: 1px solid #ccc; padding-bottom: 10px;">' + 
                         '<a href="' + zielUrl + '" target="_blank" rel="noopener noreferrer" style="color: #8e44ad; text-decoration: none;">' + 
-                           fName + '<span style="font-size: 18px; margin-left: 8px;">&#10150;</span>' +
+                             fName + '<span style="font-size: 18px; margin-left: 8px;">&#10150;</span>' +
                         '</a>' +
                        '</div>' +
                         '<table>\
@@ -604,7 +604,10 @@ map.on('click', function(e) {
                         <tr><th scope="row">PLZ</th><td>' + (feature.properties['PLZ'] || '') + '</td></tr>\
                         <tr><th scope="row">Ort</th><td>' + (feature.properties['Ort'] || '') + '</td></tr>\
                         <tr><th scope="row">Landkreis</th><td>' + (feature.properties['GEN'] || '') + '</td></tr>\
-                       </table>';
+                       </table>' +
+                       '<div style="text-align: center; margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px;">' +
+                        '<a href="https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent((feature.properties['Straße'] || '') + ', ' + (feature.properties['PLZ'] || '') + ' ' + (feature.properties['Ort'] || '')) + '" target="_blank" rel="noopener noreferrer" style="color: #2980b9; text-decoration: none; font-weight: bold;">In Google Maps öffnen </a>' +
+                       '</div>';
 					    
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			
@@ -639,7 +642,7 @@ map.addLayer(layer_Festivals_Kreis_5);
 
 /**************************/
 
-/*******nächstgelegene Bahnhöfe Style & Popup********/
+/******* NÄCHSTGELEGENE BAHNHÖFE STYLE & POPUP ********/
 
     function pop_naechstgelegene_stops_6(feature, layer) {
         layer.on({
@@ -703,7 +706,7 @@ map.addLayer(layer_Festivals_Kreis_5);
 /**************************/
 		
 		
-/*******Relevante Bahnhöfe nur in den Umringen anzeigen********/
+/******* RELEVANTE BAHNHÖFE ********/
 		
         function pop_relevante_stops_7(feature, layer) {
             layer.on({
@@ -738,7 +741,6 @@ map.addLayer(layer_Festivals_Kreis_5);
 // Eine leere Liste für die "erlaubten" Bahnhöfe erstellen
 var erlaubteBahnStops = [];
 
-// Den Layer definieren
 var layer_relevante_stops_7 = new L.geoJson(json_relevante_stops_7, {
     interactive: true,
     pane: 'pane_relevante_stops_7',
@@ -762,12 +764,11 @@ var layer_relevante_stops_7 = new L.geoJson(json_relevante_stops_7, {
     }
 });
 
-// Nur der Gruppe hinzufügen, NICHT direkt der Karte
 bounds_group.addLayer(layer_relevante_stops_7);
 
 /**************************/
 
-/*******Button Adresse suchen********/
+/******* BUTTON ADRESSE SUCHEN ********/
 
         const url = {"Nominatim OSM": "https://nominatim.openstreetmap.org/search?format=geojson&addressdetails=1&"};
 		
@@ -820,7 +821,7 @@ bounds_group.addLayer(layer_relevante_stops_7);
         });
 /**************************/
 
-/*******Ebenen-Button********/	
+/******* EBENEN-BUTTON ********/	
 		
 		 var overlaysTree = [
 		{
@@ -866,38 +867,40 @@ function updateMapLayers(umkreisLayer) {
         else if (umkreisLayer === layer_Zone_2km_3) maxDistanz = 2000;
         else if (umkreisLayer === layer_Zone_4km_2) maxDistanz = 4000;
 
-        // Welches Festival ist gerade im Fokus des Nutzers?
-        var mapCenter = map.getCenter();
-        var aktivesFestival = null;
-        var minAbstand = Infinity;
-
+        // SCHRITT 1: Finde ALLE Festivals, die aktuell auf der Karte geladen/sichtbar sind
+        var aktiveFestivals = [];
         if (typeof json_Festivals_Kreis_5 !== 'undefined') {
-            json_Festivals_Kreis_5.features.forEach(function(f) {
-                var festCoords = f.geometry.coordinates;
-                var testLatLng = L.latLng(festCoords[1], festCoords[0]);
-                var abstandZumCenter = mapCenter.distanceTo(testLatLng);
-                
-                if (abstandZumCenter < minAbstand) {
-                    minAbstand = abstandZumCenter;
-                    aktivesFestival = f;
-                }
+
+            layer_Festivals_Kreis_5.eachLayer(function(layer) {
+                aktiveFestivals.push(layer.feature);
             });
         }
 
-        // Wenn das Festival ermittelt wurde, werden die Distanzen zu den Bahnhöfen berechnet
-        if (aktivesFestival && maxDistanz > 0 && typeof json_relevante_stops_7 !== 'undefined') {
-            var fCoords = aktivesFestival.geometry.coordinates;
-            var festivalLatLng = L.latLng(fCoords[1], fCoords[0]);
-
+        // SCHRITT 2: Prüfe für jeden Bahnhof, ob er zu MINDESTENS EINEM aktiven Festival passt
+        if (aktiveFestivals.length > 0 && maxDistanz > 0 && typeof json_relevante_stops_7 !== 'undefined') {
+            
             json_relevante_stops_7.features.forEach(function(bahnhofFeature) {
                 var coords = bahnhofFeature.geometry.coordinates;
                 var bahnLatLng = L.latLng(coords[1], coords[0]);
                 
-                // Exakte Distanz zwischen diesem Festival und dem Bahnhof berechnen
-                var distanz = festivalLatLng.distanceTo(bahnLatLng);
+                // Ein Flag (Ja/Nein-Schalter), ob der Bahnhof nah genug an irgendeinem Festival liegt
+                var istNahGenug = false;
 
-                // Wenn der Bahnhof nah genug dran ist, Name in die Erlaubt-Liste
-                if (distanz <= maxDistanz) {
+                // Gehe jedes aktive Festival durch und teste die Distanz
+                aktiveFestivals.forEach(function(festivalFeature) {
+                    var fCoords = festivalFeature.geometry.coordinates;
+                    var festivalLatLng = L.latLng(fCoords[1], fCoords[0]);
+                    
+                    var distanz = festivalLatLng.distanceTo(bahnLatLng);
+                    
+                    // Sobald das erste Festival in Reichweite ist, ist der Bahnhof "erlaubt"
+                    if (distanz <= maxDistanz) {
+                        istNahGenug = true;
+                    }
+                });
+
+                // Wenn der Bahnhof nah genug an mindestens einem Festival liegt, ab auf die Liste
+                if (istNahGenug) {
                     erlaubteBahnStops.push(String(bahnhofFeature.properties['name']));
                 }
             });
@@ -913,7 +916,7 @@ function updateMapLayers(umkreisLayer) {
     
     layer_relevante_stops_7.addData(json_relevante_stops_7);
     
-    // Wenn eine Zone aktiv ist,Bahnhöfe auf Karte zeigen
+    // Wenn eine Zone aktiv ist, Bahnhöfe auf Karte zeigen
     if (umkreisLayer) {
         layer_relevante_stops_7.addTo(map);
     }
@@ -942,7 +945,7 @@ map.on('overlayremove', function(e) {
 });
 /**************************/
 
-/**************Vergangene Festivals ausschalten**********/
+/************** VERGANGENE FESTIVALS AUSSCHALTEN **********/
 
 let nurZukuenftige = false;
 
@@ -990,27 +993,6 @@ function toggleVergangeneFestivals(button) {
     }
 }
 /**************************/
-
-/***** SCHLIE?EN-PFEILE IM EBENENBUTTON *********/
-document.addEventListener("DOMContentLoaded", function() {
-    var layerPanel = document.querySelector('.leaflet-control-layers');  
-    if (layerPanel) {
-        layerPanel.addEventListener('click', function(e) {
-
-            var toggleBtn = layerPanel.querySelector('.leaflet-control-layers-toggle, .toggle, a');
-            
-            if (toggleBtn && toggleBtn.contains(e.target) && layerPanel.classList.contains('leaflet-control-layers-expanded')) {
-                e.preventDefault();
-                e.stopPropagation();
-               
-                layerPanel.classList.remove('leaflet-control-layers-expanded');
-            }
-        });
-    }
-});
-
-/**************************/
-
         </script>
     </body>
 </html>

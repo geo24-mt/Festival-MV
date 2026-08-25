@@ -54,13 +54,13 @@ L.PhotonBaseSearch = L.PhotonBase.extend({
 
     options: {
         url: 'https://api-adresse.data.gouv.fr/search/?',
-        placeholder: 'Adresse suchen',
+        placeholder: 'Adresse suchen',		//angepasst
         minChar: 3,
         limit: 5,
         submitDelay: 1000,
         includePosition: true,
         bbox: null,
-        noResultLabel: 'Keine Ergebnisse',
+        noResultLabel: 'Keine Ergebnisse',	//angepasst
         feedbackEmail: 'photon@komoot.de',  // Set to null to remove feedback box
         feedbackLabel: 'Feedback'
     },
