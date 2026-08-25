@@ -446,4 +446,27 @@ var json_Festivals_Kreis_5 = {
       }
     }
   ]
-};
+},
+{
+      "type": "Feature",
+      "properties": {
+        "fid": "16",
+        "Festival_Name": "Air Beat One Festival",
+        "Kategorie": "Electro",
+        "Genre": "Mainstage EDM, Hardstyle, Trance, Psytrance, Techno, Electro-House, Drum 'n' Bass, Eurodance/Hands-Up-Klassiker",
+        "Preise ab": ???,
+        "Datum": "07.07.2027-11.07.2027",
+        "Dauer": "5 Tage",
+        "Straße": "Flugpl. 1",
+        "PLZ": "19306",
+        "Ort": "Neustadt-Glewe",
+        "GEN": "Ludwigslust-Parchim"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          11.6044106,
+          53.3643633
+        ]
+      }
+    }:
