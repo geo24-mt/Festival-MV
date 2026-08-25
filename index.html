@@ -972,7 +972,7 @@ function toggleVergangeneFestivals(button) {
             let d = endDatumString.split('.');
             let tag = parseInt(d[0]);
             let monat = parseInt(d[1]) - 1;
-            let jahr = (d[2] && d[2].trim() !== '') ? parseInt(d[2]) : 2026;
+            let jahr = parseInt(d[2]);
 
             let festivalEnde = new Date(jahr, monat, tag);
 
