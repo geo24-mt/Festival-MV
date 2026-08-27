@@ -188,6 +188,7 @@ html, body {
 .leaflet-popup-content {
 	font-size: 13px;
 	line-height: 1.4;
+	overflow-y: auto !important;
 }	
 .leaflet-popup-content th {
 	font-weight: 700; 
