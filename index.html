@@ -165,7 +165,10 @@
 			maxZoom:18,
 			minZoom:6
         }).fitBounds([[52.553998458028865,8.751668699615644],[56.14091261604167,23.396089375514062]]);
-		
+
+	map.createPane('popupPane');
+    map.getPane('popupPane').style.zIndex = 10000;
+			
         var hash = new L.Hash(map);
 		
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
@@ -614,7 +617,7 @@ var popupContent = '<div style="text-align: center; font-weight: bold; font-size
 			
 		layer.bindPopup(content, {
 			minWidth: 350,
-			maxWidth: 800,
+			maxWidth: 650,
 			autoPan: true
 		});
     
