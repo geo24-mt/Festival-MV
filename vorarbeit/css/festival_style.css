@@ -240,8 +240,8 @@ html, body {
     border-radius: 0px 12px !important;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5) !important;
 }
-.leaflet-popup {
-    z-index: 2000 !important;
+.leaflet-popup-pane {
+    z-index: 9999 !important; /* Zwingt die Popup-Ebene ganz nach oben über alle Icons */
 }
 /**************** NEUES ROUTING-PANEL STYLE ****************/
 
