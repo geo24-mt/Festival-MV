@@ -998,22 +998,6 @@ function toggleVergangeneFestivals(button) {
 }
 /**************************/
 			
-			// Wird ausgeführt, sobald die Seite vollständig geladen ist
-document.addEventListener("DOMContentLoaded", function() {
-    // 1. Den Steuerungs-Container (Buttons) programmatisch nach unten stufen
-    var controlContainer = document.querySelector('.leaflet-control-container');
-    if (controlContainer) {
-        controlContainer.style.zIndex = '400';
-    }
-    
-    // 2. Das Popup-Pane programmatisch nach ganz oben holen (falls die Karte 'map' global heißt)
-    if (typeof map !== 'undefined') {
-        var popupPane = map.getPane('popupPane');
-        if (popupPane) {
-            popupPane.style.zIndex = '1000';
-        }
-    }
-});
         </script>
     </body>
 </html>
