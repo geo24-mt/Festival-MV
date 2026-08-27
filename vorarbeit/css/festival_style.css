@@ -185,17 +185,7 @@ html, body {
     height: 44px;
     object-fit: contain;
 }
-.leaflet-popup {
-    position: fixed !important;
-    /* Optional: Zentriert das Popup fest auf dem Bildschirm, damit es perfekt lesbar ist */
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) !important;
-    
-    /* Begrenzt die Höhe, falls das Popup sehr lang ist, und macht es innen scrollbar */
-    max-height: 80vh !important;
-    z-index: 99999 !important;
-}
+
 .leaflet-popup-content {
 	font-size: 13px;
 	line-height: 1.4;
