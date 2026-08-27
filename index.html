@@ -591,7 +591,8 @@ var popupContent = '<div style="text-align: center; font-weight: bold; font-size
                         '<a href="' + zielUrl + '" target="_blank" rel="noopener noreferrer" style="color: #8e44ad; text-decoration: none;">' + 
                              fName + '<span style="font-size: 18px; margin-left: 8px;">&#10150;</span>' +
                         '</a>' +
-                       '</div>' +
+                       '<span onclick="this.closest(\'.leaflet-popup\')._leaflet_map.closePopup();" style="position: absolute; right: 0; top: 0; color: #e74c3c; cursor: pointer; font-size: 22px; font-weight: bold; padding: 0 5px;" title="Schließen">&times;</span>' +
+                      '</div>' +
                         '<table>\
                         <tr><th scope="row">Kategorie</th><td>' + (feature.properties['Kategorie'] || '') + '</td></tr>\
                         <tr><th scope="row">Genre</th><td>' + (feature.properties['Genre'] || '') + '</td></tr>\
