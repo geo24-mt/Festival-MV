@@ -165,9 +165,6 @@
 			maxZoom:18,
 			minZoom:6
         }).fitBounds([[52.553998458028865,8.751668699615644],[56.14091261604167,23.396089375514062]]);
-
-	map.createPane('popupPane');
-    map.getPane('popupPane').style.zIndex = 10000;
 			
         var hash = new L.Hash(map);
 		
@@ -616,8 +613,8 @@ var popupContent = '<div style="text-align: center; font-weight: bold; font-size
             var content = removeEmptyRowsFromPopupContent(popupContent, feature);
 			
 		layer.bindPopup(content, {
-			minWidth: 350px,
-			maxWidth: 400px,
+			minWidth: 350,
+			maxWidth: 400,
 			autoPan: true
 		});
     
@@ -996,8 +993,7 @@ function toggleVergangeneFestivals(button) {
         filterKarte();
     }
 }
-/**************************/
-			
+/**************************/		
         </script>
     </body>
 </html>
