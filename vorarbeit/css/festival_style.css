@@ -240,6 +240,9 @@ html, body {
     border-radius: 0px 12px !important;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5) !important;
 }
+.leaflet-popup {
+    z-index: 2000 !important;
+}
 /**************** NEUES ROUTING-PANEL STYLE ****************/
 
 .leaflet-routing-wrapper-box {
