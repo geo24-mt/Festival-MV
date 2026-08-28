@@ -123,5 +123,11 @@ html, body {
     padding: 0 1px !important; 
     line-height: 1.2 !important;
 }
-
-
+.leaflet-popup{
+	max-width: 85% !important;
+}
+.leaflet-popup-content-wrapper{
+	max-width: 85% !important;
+	box-sizing: border-box;
+}
+	
