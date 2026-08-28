@@ -256,10 +256,8 @@ html, body {
 .leaflet-control {
     z-index: 500 !important;
 }
-/* Macht den originalen Leaflet-Schließen-Button unsichtbar, behält aber seine Klick-Funktion bei */
 .leaflet-popup-close-button {
-    opacity: 0 !important;
-    pointer-events: auto !important; /* Sorgt dafür, dass man ihn trotzdem noch anklicken kann */
+   color: red;
 }
 /**************** NEUES ROUTING-PANEL STYLE ****************/
 
