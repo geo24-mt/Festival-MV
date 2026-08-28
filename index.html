@@ -993,7 +993,22 @@ function toggleVergangeneFestivals(button) {
         filterKarte();
     }
 }
-/**************************/		
+/**************************/
+			// Sobald irgendein Popup auf der Karte geöffnet wird:
+map.on('popupopen', function() {
+    var controlContainer = document.querySelector('.leaflet-control-container');
+    if (controlContainer) {
+        controlContainer.style.display = 'none';
+    }
+});
+
+// Sobald das Popup wieder geschlossen wird:
+map.on('popupclose', function() {
+    var controlContainer = document.querySelector('.leaflet-control-container');
+    if (controlContainer) {
+        controlContainer.style.display = 'block';
+    }
+});
         </script>
     </body>
 </html>
