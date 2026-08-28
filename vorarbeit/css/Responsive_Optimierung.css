@@ -123,19 +123,5 @@ html, body {
     padding: 0 1px !important; 
     line-height: 1.2 !important;
 }
-.leaflet-popup-content-wrapper {
-    padding: 2px !important; 
-	max-width: 85% !important;
-	box-sizing: border-box;
-}
-.leaflet-popup-content {
-    font-size: 11px !important;
-    margin: 5px 8px !important; 
-	max-width: 80% !important;
-	padding: 3px;	
-}
-.leaflet-popup {
-    max-width: 90vw !important;
-}
 
 
