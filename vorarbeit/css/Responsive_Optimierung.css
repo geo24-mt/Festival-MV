@@ -137,3 +137,10 @@ html, body {
 .leaflet-popup {
     max-width: 90vw !important;
 }
+.leaflet-popup-content th {
+    padding-right: 10px !important; /* Nimmt den riesigen Platz weg, damit die rechte Spalte atmen kann */
+    white-space: normal !important; /* Erlaubt dem Text zur Not einen Umbruch */
+}
+.leaflet-popup-content td {
+    word-break: break-word !important; /* Zwingt lange Wörter wie Genres zum Umbruch */
+}
