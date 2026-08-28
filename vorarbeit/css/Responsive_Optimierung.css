@@ -126,8 +126,5 @@ html, body {
 .leaflet-popup{
 	max-width: 85% !important;
 }
-.leaflet-popup-content-wrapper{
-	max-width: 85% !important;
-	box-sizing: border-box;
-}
+
 	
