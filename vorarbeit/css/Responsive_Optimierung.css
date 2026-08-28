@@ -138,6 +138,4 @@ html, body {
     max-width: 90vw !important;
 }
 
-.leaflet-popup-content td {
-    word-break: break-word !important; /* Zwingt lange Wörter wie Genres zum Umbruch */
-}
+
