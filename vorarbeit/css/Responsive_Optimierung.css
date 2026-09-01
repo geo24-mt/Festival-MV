@@ -136,5 +136,13 @@ html, body {
 .leaflet-popup {
     max-width: 90vw !important;
 }
-
+ .popup-table td {
+    max-width: 70vw !important;        /* Wert etwas reduziert, damit es nicht quillt */
+    display: inline-block;             /* Wichtig! Macht max-width bei <td> wirksam */
+    word-break: break-word !important; /* Bricht den Text sauber um */
+    overflow-wrap: break-word;
+}
+.popup-table{
+    table-layout: fixed;
+} 
 	
