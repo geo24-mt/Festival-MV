@@ -192,7 +192,7 @@ html, body {
 	max-height: calc(70vh - 50px) !important;
     overflow-y: auto !important;
     overflow-x: hidden !important;
-    padding-right: 15px;
+    padding-right: 10px;
 }	
 .leaflet-popup-content th {
 	font-weight: 700; 
