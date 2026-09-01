@@ -131,18 +131,23 @@ html, body {
 .leaflet-popup-content {
     font-size: 11px !important;
     margin: 5px 8px !important; 
-	max-width: 85vw !important;	
+	max-width: 100% !important; 
+    width: auto !important;
 }
 .leaflet-popup {
     max-width: 90vw !important;
 }
+.popup-table th {
+    width: 35% !important; /* Feste Breite für die Beschriftung links */
+    text-align: left;
+    vertical-align: top;
+}
 .popup-table td {
-    max-width: 50vw !important;        /* Wert etwas reduziert, damit es nicht quillt */
-    display: inline-block;             /* Wichtig! Macht max-width bei <td> wirksam */
-    word-break: break-word !important; /* Bricht den Text sauber um */
-    overflow-wrap: break-word;
+    width: 65% !important; /* Restliche Breite für die Werte rechts */
+    word-break: break-word !important; /* Bricht die Kommaliste beim Genre sauber um */
+    overflow-wrap: anywhere !important;
 }
-.popup-table{
-	table-layout: fixed;
+.popup-table {
+    width: 100% !important;
+    table-layout: fixed !important; /* Zwingt die Tabelle, in der Kartenbreite zu bleiben */
 }
-	
