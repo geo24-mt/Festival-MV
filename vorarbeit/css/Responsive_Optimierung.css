@@ -131,10 +131,16 @@ html, body {
 .leaflet-popup-content {
     font-size: 11px !important;
     margin: 5px 8px !important; 
-	max-width: 85vw !important;;	
+	max-width: 85vw !important;	
 }
 .leaflet-popup {
     max-width: 90vw !important;
 }
-
+.popup-table td {
+	max-width: 70vw !important;
+	overflow-wrap: break-word;
+}
+.popup-table{
+	table-layout: fixed;
+}
 	
