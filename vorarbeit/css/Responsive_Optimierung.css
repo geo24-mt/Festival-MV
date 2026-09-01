@@ -130,7 +130,7 @@ html, body {
 }
 .leaflet-popup-content {
     font-size: 11px !important;
-    margin: 5px 8px !important; 
+    margin: 5px !important; 
 	max-width: 100% !important; 
     width: auto !important;
 }
